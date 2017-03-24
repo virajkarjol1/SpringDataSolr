@@ -35,7 +35,7 @@ class ProductServiceImpl implements ProductService {
 
 		return productRepository.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
 	}
-
+ 
 	/**
 	 * @param ID
 	 * @return Products matching the ID 
