@@ -22,7 +22,11 @@ class ProductServiceImpl implements ProductService {
 	private static final Pattern IGNORED_CHARS_PATTERN = Pattern.compile("\\p{Punct}");
 
 	private ProductRepository productRepository;
-
+	
+	/**
+	 * @param Search term and Pageable 
+	 * @return Products matching the name 
+	 **/
 	@Override
 	public Page<Product> findByName(String searchTerm, Pageable pageable) {
 		if (StringUtils.isBlank(searchTerm)) {
@@ -32,21 +36,37 @@ class ProductServiceImpl implements ProductService {
 		return productRepository.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
 	}
 
+	/**
+	 * @param ID
+	 * @return Products matching the ID 
+	 **/
 	@Override
 	public Product findById(String id) {
 		return productRepository.findOne(id);
 	}
 	
+	/**
+	 * @param SearchTerm 
+	 * @return Products matching the Categories 
+	 **/
 	@Override
 	public List<Product> findByCategories(String searchTerm) {
 		return (productRepository.findByCategories(searchTerm));
 	}
 	
+	/**
+	 * @param Search term 
+	 * @return Products matching the name 
+	 **/
 	@Override
 	public List<Product> findByName(String searchTerm) {
 		return (productRepository.findByName(searchTerm));
 	}
 	
+	/**
+	 * @param SearchFragment 
+	 * @return Products beginning with the SearchFragment
+	 **/
 	@Override
 	public FacetPage<Product> autocompleteNameFragment(String fragment, Pageable pageable) {
 		if (StringUtils.isBlank(fragment)) {
